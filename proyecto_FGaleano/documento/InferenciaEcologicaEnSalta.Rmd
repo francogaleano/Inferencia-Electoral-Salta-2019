@@ -1,0 +1,269 @@
+---
+title: "Herramientas cuantitativas para el análisis político usando R Inferencia Ecologica en Salta"
+author: "Alumno: Franco Galeano"
+date: "Profesor: Juan Pablo Ruiz Nicolini"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+\newpage
+
+**Resumen**:
+El objetivo del presente trabajo es poder estimar usando un modelo de inferencia ecológica a donde fueron los votos de las elecciones primarias, abiertas, simultáneas y obligatorias (PASO) en las elecciones generales para la categoría gobernador en la provincia de Salta celebradas durante el año 2019. Para ello inicialmente se realizará un análisis descriptivo de ambos procesos electorales para luego proceder con la presentación de los resultados del modelo de inferencia ecológica. A modo introductorio también se presentará un resumen de la historia política de la provincia de Salta.
+
+**Keywords:  Elecciones Salta, Inferencia ecológica.**
+
+\newpage
+
+# Indice
+
+### (1) Historia política de Salta
+
+### (2) Evolución y composición del electorado salteño
+
+### (3) Elecciones 2019
+
+### (4) Inferencia ecológica
+
+### (5) Comentario Final
+
+
+\newpage
+
+## (1) Historia política de Salta
+
+ ![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/S01plot_introductorio.png)
+ 
+ 
+  Desde el retorno a la democracia hasta la fecha, en Salta han gobernado hombres pertenecientes a dos espacios políticos: el Partido Justicialista (PJ) y el provincial Partido Renovador de Salta (PRS). Salta no ha experimentado renuncias, salidas anticipadas, juicios políticos o intervenciones al mandato del gobernador electo mediante la voluntad popular desde el último golpe de estado nacional (1976). 
+
+  Inaugura el retorno a la democracia la fórmula peronista Roberto Romero - Hernán Figueroa Reyes. Roberto Romero llegaba a la gobernación siendo miembro fundador de El Tribuno, diario de mayor tirada provincial. En 1986 impulsa una sustantiva reforma constitucional, destacándose la no modificación del límite de un mandato.
+  
+  Es sucedido en 1987 por Hernán Cornejo (PJ), quien ocupó la cartera de economía durante la gobernación de Roberto Romero.
+  
+  En 1991 llega al poder el PRS de la mano del capitán de navío Roberto Ulloa siendo electo con el 56% de los votos positivos. Ulloa previamente fue designado por la Junta Militar gobernador de Salta, cargo que ocupó entre 1977 y 1983. En octubre de 1982 funda del Partido Renovador de Salta, partido al que renuncia luego de su alianza con Juan Manuel Urtubey en 2007. Hasta el día de la fecha es el único gobernador no identificado con el peronismo que desde 1983 ha ocupado el sillón del Grand Bourg.
+  
+  En 1995 inicia el ciclo de 12 años de Juan Carlos Romero como gobernador, en todos los períodos con Walter Wayar como su compañero de fórmula. Previo a su arribo a la gobernación fue senador nacional desde 1986 hasta 1995 y convencional constituyente de 1994. Entre los aspectos destacados de su gobernación resalta la reforma de la Constitución Provincial en 1998, reforma que entre otras cosas le permite ser reelecto gobernador.
+  
+  El año 2007 puede ser interpretado como un año de "quiebre" en la política salteña, hasta ese entonces la provincia había tenido 5 gobiernos peronistas y 1 renovador (estos siempre enfrentados). Este "orden" se altera cuando la imposibilidad del gobernador Juan Carlos Romero de presentarse nuevamente como gobernador reabre el juego político. Es en esa situación donde facciones pertenecientes al peronismo encabezadas por Juan Manuel Urtubey dialogan con la cúpula del PRS y logran forjar una alianza para enfrentar a Walter Wayar, delfīn político del gobernador Romero.
+  Durante el primer gobierno de Urtubey (2007–2011), parte del romerismo es absorbido por Juan Manuel Urtubey. Algo que probablemente suceda en el nuevo gobierno de Sáenz.
+  El triunfo de la fórmula Urtubey - Zottos (PJ + PRS) inaugura un ciclo de 12 años similar al de Romero, que finaliza sin poder ser reelecto abriendo la posibilidad a viejos aspirantes, pero con 2 diferencias: 
+  1) No logra reformar la constitución provincial durante los 12 años de gobierno. 
+  2) Al final de su mandato no designa sucesor, provocando la mudanza de los miembros de la coalición a los tres espacios políticos de mayor relevancia. Sobre este punto volveremos más adelante.
+ 
+\newpage
+### (2) Evolución y composición del electorado salteño
+
+#### Evolución del electorado salteño 
+  Hacia 1983 el electorado era menor a 400.000 electores, 36 años después ha superado el millón de electores. Como se puede apreciar en el gráfico de abajo, la pendiente de crecimiento del electorado a medida que pasan los años a partir de 1983 parece tornarse más empinada. La pendiente de mayor impacto visual es la de 2011-2015, probablemente por la inclusión de los jóvenes de entre 16 y 18 años en el padrón a partir de las elecciones de medio término de 2013. 
+  
+  Con respecto a la participación electoral, esta toca un pico histórico en las elecciones de 1962 con una participación cercana al 99%. Desde 1983 se aprecian altibajos en la participacion en elecciones a gobernador en Salta, con una leve tendencia hacia la baja en la participación. El punto más bajo desde 1983 es la elección de 2003 donde Juan Carlos Romero es electo para su tercer mandato.
+  
+  El gráfico de abajo recaba el tamaño del electorado y la participación en elecciones a gobernador desde 1946 hasta 2019. El año 1983 está señalado en azul ya que desde ese año ininterrumpidamente los salteños han podido acudir a las urnas cada 4 años para elegir a su mandatario provincial.
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/S02Electores_Historico_Salta.png)
+
+\newpage
+
+  El siguiente gráfico compara la participación en elecciones presidenciales a nivel nacional (en rojo), con elecciones presidenciales a nivel provincial (en verde) y elecciones a gobernador (en azul).
+  
+  Dos comentarios al respecto:
+  
+  * La participación provincial en elecciones presidenciales es inferior a la nacional desde 1946.
+  
+  * Con padrones muy similares en tamaño (padrón provincial incluye extranjeros por lo tanto es levemente superior al nacional), el electorado salteño ha tenido históricamente una mayor participación en elecciones a presidente que en elecciones a gobernador. Esto podría compararse en otros análisis con la situación de otras provincias. Salvo la excepción de 1962 y las elecciones concurrentes.
+  
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/S02Electores_Historico_Comparado.png)
+
+\newpage
+
+#### Composición del electorado salteño 
+
+  La provincia de Salta está compuesta por 60 municipios y 23 departamentos. Los departamentos no poseen autoridades a nivel ejecutivo, aunque si representantes a nivel provincial (Senadores y Diputados). Cada departamento elige 1 Senador cada 4 años y posee al menos 1 diputado (cantidad proporcional al tamaño poblacional) también con mandato de 4 años. Trece departamentos poseen 1 diputado (56% de los departamentos), cinco eligen 2, Anta y Metán eligen 3, San Martín y Orán eligen 6 y el departamento Capital elige 19.
+  
+  Cada municipio elige su intendente cada 4 años y sus concejales cada 2, la cantidad de concejales es proporcional a la cantidad de habitantes y posee un mínimo de 3 miembros.
+  
+  Tal como se ilustra en el diagrama de árbol (o *treemap*) de abajo, el electorado salteño se concentra principalmente en su ciudad capital. 4 de cada 10 ciudadanos habilitados para votar registran domicilio en la ciudad capital. Le siguen en relevancia las ciudades de Orán (6,3%) y Tartagal (5,8%), cabeceras de los departamentos Orán y San Martín.
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/S02Treemap_Electores2.png)
+
+
+  Los departamentos Capital (42,3%), San Martín (12,9%) y Orán (11,2%) en conjunto representan el 66% del electorado.
+  
+  Los municipios más pequeños son Tolar Grande (Departamento Los Andes) y La Candelaria (Departamento La Candelaria) con 486 y 1251 electores respectivamente. 
+
+  Una alternativa al *treemap* es el *waffle plot*, cada rectángulo representa aproximádamente 1000 electores, cada color es un departamento diferente.
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/S02WafflePlotElectores.png)
+
+\newpage
+
+### (3) Elecciones 2019  
+
+#### Introducción
+
+  La no designación de un sucesor, presumiblemente por las pretensiones presidenciales del gobernador Urtubey, produjeron alianzas inéditas hasta ese entonces en la política salteña que tuvieron su impacto en las elecciones a diputado y senador. Uno de los efectos fueron las grandes descoordinaciones en la campaña nacional del oficialismo provincial, se producían situaciones donde equipos de trabajo rivales en elecciones provinciales tenían que trabajar juntos para la elección nacional, ambas separadas por apenas semanas.
+
+  Un breve repaso sobre las coaliciones salteñas:
+  
+  * Alfredo Olmedo forma una alianza con la Unión Cívica Radical ofreciéndole la candidatura a la vicegobernación al diputado nacional Miguel Nanni. Cristina Fiore, presidenta del Partido Renovador de Salta, el concejal del PRO Andrés Suriani y los renovadores de la capital integran la coalición.
+  
+  * Dirigentes de peso dentro del urtubeicismo como Miguel Isa (vicegobernador de Urtubey) y Emiliano Estrada (ministro de economía provincial) se suman al Frente de Todos encabezado por Sergio Napoleón "El Oso" Leavy, uno de los principales opositores al gobernador. También integran la coalición renovadores del norte de la provincia como los intendentes Marcelo Lara Gros (Orán) e Isidro Ruarte (General Mosconi). Elia Fernandez, quién había sido precandidata a Senadora Nacional, decide ir por fuera del Frente de Todos como precandidata a la gobernación luego de que no le permitiesen competir en la interna, por su parte Miguel Isa judicializó la interna para poder competir.
+  
+  * Dirigentes del romerismo, el grueso del PRO, renovadores del sur de la provincia como Gramaglia, dirigentes del peronismo de Salta Capital, partidos locales e integrentes "leales" del urtubeicismo deciden apoyar a Gustavo Adolfo Ruperto Sáenz Stiro.
+
+#### Sobre el sistema electoral de Salta
+
+  El gobernador salteño es elegido por pluralidad simple sin ballotage, la selección de candidaturas prevé unas elecciones primarias, abiertas, simultáneas y obligatorias (PASO) al igual que el sistema nacional con algunas diferencias. Si bien existe un umbral de 1,5% de los votos válidos en las PASO para ser candidatos, las adhesiones y alianzas se dan por cargo. 2019 fue el año de estreno de la ley de paridad de género. 
+  
+  A diferencia del sistema nacional, en Salta en ambas elecciones se vota con la Boleta Única Electrónica (BUE) desde 2013. Este sistema tuvo una implementación progresiva iniciada en 2009. Este sistema ha sido cuestionado por numerosos especialistas en seguridad informática y por especialistas en sistemas electorales (ver (CIPPEC)[https://www.cippec.org/wp-content/uploads/2017/03/1124.pdf]). Actualmente está en debate una reforma constitucional y una reforma electoral en la provincia.
+
+\newpage
+#### Resultados
+
+  En ambas elecciones Gustavo Sáenz fue el candidato más votado y Sergio Leavy el segundo. 
+  
+  En las PASO existieron 2 internas: la del Frente de Todos donde Leavy se impuso frente al ex-vicegobernador y ex-intendente de Salta Miguel Isa y la del FIT donde Pablo López del PO-PTS obtuvo mas votos que Violeta Gil del PO y Andrea Villegas del MST. 
+  Gustavo Sáenz y Sergio Leavy fueron únicos candidatos que aumentaron su caudal de voto entre elecciones sumando 11 y 2 puntos porcentuales respectivamente. Aunque el Frente de Todos, espacio de pertenencia de Sergio Leavy, en conjunto redujo su volumen en 6 puntos porcentuales.
+  Alfredo Olmedo perdió 3 puntos porcentuales mientras que Elia Fernández y Pablo López mantuvieron su 2% (el FIT pierde 2 puntos)
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/resultados2019.png)
+
+\newpage
+Entre los ganadores por departamento (Sáenz y Leavy fueron los únicos) hay diferencias entre elecciones. Sáenz pasó de ser el más votado en 17 departamentos a serlo en 20. Sergio Leavy fue el candidato más votado en Santa Victoria, Rivadavia y San Martín, este último es su bastión (fue legislador provincial e intendente de Tartagal en 3 períodos).
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/mapa_ganadores.png)
+
+\newpage
+
+Entre ambas elecciones, Gustavo Saenz revierte o reduce la diferencia en puntos porcentuales en departamentos donde perdió, y aumenta los márgenes de victoria en la zona de los valles (Capital y alrededores).
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/mapa_frontrunners.png)
+
+\newpage
+
+Una forma alternativa de presentar los resultados es en *geofacets*, que permiten apreciar visualmente todos los distritos independientemente de su tamaño.
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/geofacet_paso.png)
+
+\newpage
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/geofacet_generales.png)
+\newpage
+
+#### La nueva legislatura 
+
+  Las alianzas construídas por Gustavo Sáenz y el apoyo de legisladores pertenecientes al espacio de Alfredo Olmedo le permitieron obtener mayoría en ambas Cámaras. En la Cámara de Diputados optaron por formar dos bloques para obtener mayor cantidad de presidencias de comisiones.
+
+  Estas nuevas mayorías le permiten proyectar al gobernador el plan para una [reforma constitucional](https://elintransigente.com/politica/2020/01/07/el-gobernador-de-salta-presentara-la-reforma-constitucional/).
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/ggparliamentDiputadosSalta.png)
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/ggparliamentSenadoresSalta.png)
+
+\newpage
+
+### (4) Inferencia ecológica
+
+#### ¿Qué es la inferencia ecológica?
+
+La inferencia ecológica es un proceso que consiste en inferir el comportamiento individual a partir de datos agregados, es decir, hacer predicciones a nivel desagregado a partir de datos agregados. Este modelo, considera a los votos obtenidos en las PASO por casa lista como variables independientes, y a los votos obtenidos en las generales variables dependientes. 
+La variación en cada mesa permite, en palabras de [Ernesto Calvo](https://www.elestadista.com.ar/?p=7336) "medir el origen y destino de los votos entre elecciones". 
+
+El modelo de inferencia ecológica implementado en este caso es el de [King, Rosen y Tanner](https://gking.harvard.edu/files/gking/files/ecinf04.pdf)(2007[^1]), una modificación del modelo de King (1997[^2]). El mismo no está exento de críticas y de modelos propuestos con máyor simpleza. Por ejemplo, [Juan Dodyk](http://juandodyk.github.io/post/inferencia-ecologica-1/#CodR) en su blog afirma que "si bien el modelo de King, Rosen y Tanner es teóricamente más sofisticado que *otros modelos presentados*. El modelo bayesiano jerárquico no tiene ningún impacto en el resultado que lo diferencie de *una* regresión lineal “controlada”" (cursivas de mi autoría).
+Las criticas al modelo de King, Rosen y Tanner, en su mayoría es al supuesto de que no existe un sesgo en la agregación, ya sea espacial o de otra índole.
+El script utilizado es autoría de [Ernesto Calvo](https://www.dropbox.com/s/05wlfh88mxtl5jo/Codigo%20y%20Data%20Transferencias%20PASO-General%20para%20R-2019.zip?dl=0), se le realizaron algunas modificaciones para adaptarlo a la elección provincial.
+
+#### Resultados
+
+Los resultados a continuación se presentan en una tabla de 10 * 7 que incluye los totales por fila y columna. Los resultados totales por fila representan los votos que cada precandidato obtuvo en las paso, los totales por columna los que cada candidato obtuvo en las elecciones generales.
+
+Por ejemplo apróximadamente 290.000 personas que votaron a Sáenz en las PASO volvieron a votarlo en las generales y apróximadamente 1600 personas que votaron a Gustavo Saenz en las PASO no lo hicieron en las generales. Esas personas en su mayoría votaron a Olmedo o no fueron a votar, aunque el número es pequeño en relación al total de votos que Sáenz obtuvo. Esto puede ser apreciado de mejor manera en la tabla a continuación, alrededor el 99,5% de las personas que votaron a Sáenz en las primarias volvieron a votarlo en las elecciones. La anterior cifra podría indicar una gran adhesión por parte de su electorado. Por otra parte, el electo gobernador salteño fue el candidato que mayor apoyo obtuvo de aquellas personas que no habían participado o votado en blanco en las primarias (4,6% de los que votaron en blanco o no votaron en las primarias).
+
+
+**Tabla 1: Inferencia Ecológica - Salta 2019**
+```{r xtable, results="asis", echo=FALSE,message= FALSE, warning=FALSE}
+library(knitr)
+library(janitor)
+library(tidyverse)
+# Tabla en numeros enteros (CAMBIAR LA DIRECCION A LA HORA DE EJECUTAR) 
+tabla_enteros <- read_csv("/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/data/inferenciaEcoResultados.csv") %>% 
+  rename("PASO /GENERALES" = "indice",
+         "Leavy"="grales_fdt_leavy",
+         "Saenz"="grales_saenz",
+         "Olmedo"="grales_olmedo",
+         "Lopez" = "grales_fit_lopez",
+         "Fernandez" = "grales_fernandez",
+         "No Voto / Blanco" = "grales_novoto_blanco") %>% 
+  adorn_totals("row") %>%
+  mutate(total = rowSums(.[2:7])) 
+
+kable(tabla_enteros, "latex")
+```
+
+
+[^1]: King, Gary, Ori Rosen y Martin Tanner. 2004. "Information in Ecological Inference: An Introduction" En Ecological Inference: New Methodological Strategies, King, Gary, Ori Rosen, and Martin Tanner, eds. Cambridge University Press. Pp. 1–13.
+
+[^2]: King, Gary. 1997. A Solution to the Ecological Inference Problem: Reconstructing Individual Behavior from Aggregate Data. Princeton: Princeton University Press.
+
+ El "Oso" Leavy, principal competidor del intendente capitalino, mantiene un porcentaje alto de adhesión (93,8%) pero transfiere casi un 6% de sus votos a su rival Sáenz. Es el candidato que más votos logra retener de referentes cercanos/pertenecientes al Frente de Todos (Miguel Isa y Elia Fernandez).
+
+  El 44% de las personas que optaron por Isa en las PASO, se volcaron hacia el triunfador de la interna del Frente de Todos (Leavy). Casi un 30% de los votantes de Isa migraron hacia Saenz y un 9% votó en blanco o no acudió a votar.
+
+  Los votantes de Elia Fernandez, quien fuese competidora de Leavy en las internas a Senador Nacional del Frente de Todos, deciden en su mayoría apoyar al líder provincial del Frente de Todos en las generales (68%). A su vez, resultó ser la segunda opción de votantes que no acudieron a votar o votaron en blanco en las primarias (2,6%)
+
+ Alfredo Olmedo, de quien se creía poseía un núcleo duro de votantes por su discurso de corte conservador y "mano dura", es el candidato que más votos transfiere a Gustavo Sáenz para que se convierta en gobernador (alrededor de 39400 votos). Es decir, 3 de cada 10 personas que optaron por Olmedo en las PASO, optaron por Sáenz en las generales. Este hallazgo resulta llamativo, sería muy positivo poder testearlo en estudios posteriores con otras metodologías tales como los estudios de opinión pública.
+
+  Con respecto a la izquierda, existe poca adhesión por parte de sus votantes. Sorpresivamente, alrededor del 64% de los votantes de Pablo López optaron por Alfredo Olmedo en las generales, y el 68% de los votantes de Villegas por Sáenz. Estas opciones resultan llamativas por los posicionamientos ideológicos casi opuestos entre estos candidatos mencionados. Una posible explicación es que los que optaron por la izquierda en las primarias para luego volcarse a otros referentes, optaron en un primer momento por la izquierda al considerar que esta no tenía posibilidades de triunfar. Aunque esto último no es más que una posible explicación, estos votantes podrían haber optado por el voto en blanco o no acudir a votar.
+
+**Tabla 2: Inferencia Ecológica en porcentajes - Salta 2019**
+
+```{r tabla_porcentajes, results="asis", echo=FALSE,message= FALSE, warning=FALSE}
+library(knitr)
+library(janitor)
+library(tidyverse)
+## Tabla en porcentajes para el documento  (CAMBIAR LA DIRECCION A LA HORA DE EJECUTAR) 
+tabla_pcts <- read_csv("/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/data/inferenciaEcoResultados.csv") %>%
+  rename("PASO /GENERALES" = "indice",
+         "Leavy"="grales_fdt_leavy",
+         "Saenz"="grales_saenz",
+         "Olmedo"="grales_olmedo",
+         "Lopez" = "grales_fit_lopez",
+         "Fernandez" = "grales_fernandez",
+         "No Voto / Blanco" = "grales_novoto_blanco") %>% 
+  adorn_totals("row") %>% 
+  adorn_percentages("row") %>% 
+  adorn_pct_formatting()
+  #adorn_ns() %>% #PARA AGREGAR A LA TABLA LOS N ENTEROS
+  
+kable(tabla_pcts, "latex")
+```
+
+\newpage
+
+Una forma alternativa a las tabla es presentar un diagrama de Sankey, donde se observa el flujo de votos de cada candidato entre las PASO y las generales. Los flujos muestran el destino de los votos de cada fuerza.
+
+
+![](/Users/francogaleano/Desktop/Herramientas cuantitativas para el análisis político usando R - Ruiz Nicolini/proyecto_FGaleano/plots/Sankey.png)
+
+
+
+#### Nota técnica
+Para el análisis se utilizaron los datos del escrutinio definitivo de las PASO 2019 a nivel mesa y el escrutinio definitivo de la elección general, ambos disponibles en la página del [Tribunal Electoral de la Provincia de Salta](http://www.electoralsalta.gob.ar). Se utilizaron los datos de las 3117 mesas habilitadas para votar. 
+El modelo requiere de los datos sobre cantidad de electores de cada mesa, datos que el escrutinio definitivo no posee. Por tal motivo se utilizaron los datos de electores por mesa del padrón nacional. Existe una pequeña diferencia de 1067 electores con respecto a la que indica el padrón provincial (1,025 millones de votantes habilitados).
+El modelo de transferencias produce una Tabla de 9 (PASO) x 6 (General) transferencias de votos.
+
+
+\newpage
+
+### (5) Comentario Final
+
+  El objetivo del presente trabajo era poder estimar usando un modelo de inferencia ecológica a donde fueron los votos de las PASO en las elecciones generales para la categoría gobernador en la provincia de Salta celebradas durante el año 2019, tal objetivo ha sido cumplido. La mayor incógnita era poder estimar a donde fueron los votos de Miguel Isa, perdedor de la interna del Frente de Todos, aunque el hallazgo más llamativo reside en el destino de los votos que fueron a Alfredo Olmedo en las PASO.
+  Por otra parte, resulta interesante hacer un análisis de inferencia ecológica en momentos de cambios políticos en la provincia, algo que desde el retorno a la democracia ocurre por segunda vez.
+  Otra pregunta que despierta este análisis es por qué Sáenz posee un llamativo apoyo transversal: por un lado obtiene votos del núcleo peronista y por otro votos de sectores más conservadores como los que apoyan a Olmedo. Este estudio ha servido de idea disparadora para explocar las *bondades* de Sáenz. 
+ 
+#### Further Research
+  Este pequeño estudio podría realizarse a nivel departamental, aunque existe el problema de que muchos departamentos poseen pocas mesas, algo que aumenta el error estadístico. Una posibilidad es realizarlo en los 3 departamentos más importantes. También podría hacerse a nivel municipal en Salta y en Tartagal, ciudades donde casi todos los frentes políticos tuvieron internas.
+  Estos estudios también podrían ser contrastados a partir de encuestas de opinión pública, aunque esto seguramente demande una fuente de financiamiento.
