@@ -90,5 +90,7 @@ elecciones_historico <- elecciones_historico %>%
 ggarrange(timeline_gobernadores, elecciones_historico,
           ncol = 1, nrow = 2)
 
+dev.off() # Agregas esto para "apagar" el graficador y que no se "rompan" las dimensiones del plot
+
 ggsave("plots/S01plot_introductorio.png", width = 20, height = 20, units = "cm")
 ## exportado con "Export" de Rstudio porque no logré exportar más que el preview y quedaba muy compactado
